@@ -6,7 +6,7 @@ interface WallNavProps {
   activeIndex: number;
 }
 
-const sections = ["Home", "Concept", "Vault", "Store"];
+const sections = ["Home", "Concepts", "Vault", "Store"];
 
 export default function WallNav({ activeIndex }: WallNavProps) {
   return (
