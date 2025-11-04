@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, UnifrakturMaguntia, Spectral } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  UnifrakturMaguntia,
+  Spectral,
+} from "next/font/google";
 import "./globals.css";
 import CapsuleHeader from "./components/CapsuleHeader";
 import ScrollIndicator from "./components/ScrollIndicator";
@@ -27,13 +32,23 @@ const spectral = Spectral({
 });
 
 export const metadata: Metadata = {
-  title: "NE-S / California Mountain Snake [SS26]",
-  description: "NE-S fashion capsule collection - California Mountain Snake [SS26]. A fusion of medical aesthetics and high-end fashion.",
-  keywords: ["NE-S", "fashion", "capsule", "California Mountain Snake", "SS26", "luxury fashion"],
+  title: "Hollow Princess",
+  description:
+    "Clothing of a fallen house, preserved out of duty rather than sentiment. Hollow Princess SS26 is defined by discipline, structure, and the absence of indulgence.",
+  keywords: [
+    "Hollow Princess",
+    "SS26",
+    "fashion",
+    "capsule",
+    "couture",
+    "soulslike",
+    "austere",
+  ],
   authors: [{ name: "NE-S" }],
   openGraph: {
-    title: "NE-S / California Mountain Snake [SS26]",
-    description: "NE-S fashion capsule collection - California Mountain Snake [SS26]. A fusion of medical aesthetics and high-end fashion.",
+    title: "Hollow Princess",
+    description:
+      "Attire of a lost bloodline, maintained only to honor a dead lineage. Hollow Princess SS26 rejects ornament and embraces disciplined austerity.",
     type: "website",
   },
 };

@@ -7,7 +7,7 @@ interface WallNavProps {
   scrollToSection: (index: number) => void;
 }
 
-const sections = ["Front", "Origin", "Capsule", "Items"];
+const sections = ["Front", "Locations", "Capsule", "Items"];
 
 export default function WallNav({
   activeIndex,
@@ -36,9 +36,9 @@ export default function WallNav({
         </span>
       </motion.div>
 
-      {/* Left Bottom - Origin */}
+      {/* Right Top - Locations */}
       <motion.div
-        className="absolute left-8 bottom-16 transform -rotate-90 origin-center cursor-pointer"
+        className="absolute right-8 top-16 transform rotate-90 origin-center cursor-pointer"
         animate={{
           opacity: activeIndex === 1 ? 1 : 0.35,
           scale: activeIndex === 1 ? 1.05 : 1,
@@ -57,9 +57,9 @@ export default function WallNav({
         </span>
       </motion.div>
 
-      {/* Right Top - Capsule */}
+      {/* Left Bottom - Capsule */}
       <motion.div
-        className="absolute right-8 top-16 transform rotate-90 origin-center cursor-pointer"
+        className="absolute left-8 bottom-16 transform -rotate-90 origin-center cursor-pointer"
         animate={{
           opacity: activeIndex === 2 ? 1 : 0.35,
           scale: activeIndex === 2 ? 1.05 : 1,

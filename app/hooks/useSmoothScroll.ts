@@ -13,7 +13,7 @@ const CAMERA_STATES: CameraState[] = [
   },
   {
     // Section 2 - State 2
-    position: { x: -226.14, y: 488.24, z: -65.46 },
+    position: { x: -224.85, y: 488.24, z: -61.60 },
     rotation: { x: -36.43, y: -67.54, z: -34.3 },
   },
   {
@@ -150,6 +150,10 @@ export function useSmoothScroll() {
         };
 
         setCameraState(interpolatedState);
+        // Notify listeners (e.g., FocusBlurItem) of a Lenis scroll tick for efficient updates
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("lenis:scrolltick"));
+        }
       };
 
       lenis.on("scroll", handleScroll);
