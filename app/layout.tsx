@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import CapsuleHeader from "./components/CapsuleHeader";
 import ScrollIndicator from "./components/ScrollIndicator";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
