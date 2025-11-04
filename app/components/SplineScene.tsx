@@ -12,6 +12,7 @@ interface SplineSceneProps {
 export default function SplineScene({ cameraState }: SplineSceneProps) {
   const [hasError, setHasError] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const splineRef = useRef<Application | null>(null);
   const cameraRef = useRef<any>(null);
   const cameraStateRef = useRef<CameraState>(cameraState);
@@ -29,6 +30,12 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
     setHasError(false);
     setRetryKey(prev => prev + 1); // Force re-render by changing key
   };
+
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(checkMobile);
+  }, []);
 
   // Update cameraState ref whenever it changes
   useEffect(() => {
@@ -54,16 +61,28 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
       z: camera.rotation.z,
     };
 
+    // Performance optimization for mobile devices
+    let lastTime = 0;
+    const targetFPS = isMobile ? 30 : 60;
+    const frameInterval = 1000 / targetFPS;
+
     // Smooth interpolation function
     const lerp = (start: number, end: number, factor: number) => {
       return start + (end - start) * factor;
     };
 
-    const updateCamera = () => {
+    const updateCamera = (currentTime: number) => {
       if (!cameraRef.current || !splineRef.current) {
         isAnimatingRef.current = false;
         return;
       }
+
+      // Throttle updates based on target FPS
+      if (currentTime - lastTime < frameInterval) {
+        animationIdRef.current = requestAnimationFrame(updateCamera);
+        return;
+      }
+      lastTime = currentTime;
 
       const currentCamera = cameraRef.current;
       
@@ -78,7 +97,8 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
       // Smoothly interpolate position (using ease factor for responsive movement)
       // Higher value = more responsive, lower value = smoother but laggier
       // Since scroll handler already interpolates, use higher ease for immediate response
-      const easeFactor = 0.7;
+      // Reduced ease factor on mobile for smoother, less computationally intensive animations
+      const easeFactor = isMobile ? 0.5 : 0.7;
       currentPos.x = lerp(currentPos.x, targetState.position.x, easeFactor);
       currentPos.y = lerp(currentPos.y, targetState.position.y, easeFactor);
       currentPos.z = lerp(currentPos.z, targetState.position.z, easeFactor);
@@ -103,7 +123,7 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
 
     // Start the animation loop
     animationIdRef.current = requestAnimationFrame(updateCamera);
-    console.log("Camera update loop started");
+    console.log(`Camera update loop started (${targetFPS}fps - ${isMobile ? 'mobile' : 'desktop'})`);
   };
 
   const onLoad = (spline: Application) => {
@@ -171,6 +191,32 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
       }
     };
   }, []);
+
+  // Memory management: pause animations when page is hidden
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Page is hidden, pause animation to save resources
+        if (animationIdRef.current !== null) {
+          cancelAnimationFrame(animationIdRef.current);
+          isAnimatingRef.current = false;
+          console.log("Animation paused (page hidden)");
+        }
+      } else {
+        // Page is visible again, resume animation
+        if (splineRef.current && cameraRef.current && !isAnimatingRef.current) {
+          startAnimationLoop();
+          console.log("Animation resumed (page visible)");
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isMobile]);
 
   return (
     <div className="fixed inset-0 z-0">
