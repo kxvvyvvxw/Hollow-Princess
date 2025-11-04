@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import { Application } from "@splinetool/runtime";
 import { CameraState } from "../types/camera";
@@ -10,11 +10,25 @@ interface SplineSceneProps {
 }
 
 export default function SplineScene({ cameraState }: SplineSceneProps) {
+  const [hasError, setHasError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
   const splineRef = useRef<Application | null>(null);
   const cameraRef = useRef<any>(null);
   const cameraStateRef = useRef<CameraState>(cameraState);
   const animationIdRef = useRef<number | null>(null);
   const isAnimatingRef = useRef<boolean>(false);
+
+  // Error boundary handler
+  const handleError = (error: Error) => {
+    console.error("Spline error:", error);
+    setHasError(true);
+  };
+
+  // Reset error state for retry
+  const handleRetry = () => {
+    setHasError(false);
+    setRetryKey(prev => prev + 1); // Force re-render by changing key
+  };
 
   // Update cameraState ref whenever it changes
   useEffect(() => {
@@ -160,11 +174,27 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
 
   return (
     <div className="fixed inset-0 z-0">
-      <Spline
-        scene="https://prod.spline.design/0OcmU8W25rvMzPDk/scene.splinecode"
-        onLoad={onLoad}
-        className="w-full h-full"
-      />
+      {hasError ? (
+        <div className="w-full h-full flex items-center justify-center bg-gray-100">
+          <div className="text-center">
+            <p className="text-gray-600 mb-4">3D scene failed to load</p>
+            <button 
+              onClick={handleRetry}
+              className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      ) : (
+        <Spline
+          key={retryKey} // Add key prop to force re-render
+          scene="https://prod.spline.design/0OcmU8W25rvMzPDk/scene.splinecode"
+          onLoad={onLoad}
+          onError={handleError}
+          className="w-full h-full"
+        />
+      )}
     </div>
   );
 }
