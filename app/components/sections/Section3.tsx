@@ -8,15 +8,19 @@ export default function Section3() {
       <div className="grid grid-cols-2 gap-4 w-full h-full items-center px-8">
         {/* First Column */}
         <div className="flex items-center justify-center">
-          <div className="font-geist-sans text-4xl text-black opacity-50">
-            C1
+          <div className="font-geist-sans text-3xl md:text-4xl text-black/60 leading-tight tracking-tight">
+            One edge
+            <br />
+            sharpens your <span className="font-gothic">memory</span>
           </div>
         </div>
 
         {/* Second Column */}
         <div className="flex items-center justify-center">
-          <div className="font-geist-sans text-4xl text-black opacity-50">
-            C2
+          <div className="font-geist-sans text-3xl md:text-4xl text-black/60 leading-tight tracking-tight text-right">
+            The other edge
+            <br />
+            sharpens your <span className="font-gothic">teeth</span>
           </div>
         </div>
       </div>

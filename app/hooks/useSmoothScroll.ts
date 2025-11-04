@@ -18,7 +18,7 @@ const CAMERA_STATES: CameraState[] = [
   },
   {
     // Section 3 - State 3
-    position: { x: 90.71, y: 11.62, z: 142.27 },
+    position: { x: 99.23, y: 15.67, z: 140.16 },
     rotation: { x: 22.58, y: 22.3, z: 21.74 },
   },
   {

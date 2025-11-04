@@ -1,27 +1,47 @@
 # NE-S / California Mountain Snake [SS26]
 
-A high-end fashion capsule collection website that combines medical aesthetics with luxury fashion storytelling. Built with Next.js, Tailwind CSS, and Framer Motion for an immersive design experience.
+Experimental product capsule site focused on object-driven UI, controlled motion, and sterile visual design.
 
-## Project Overview
+## Purpose
 
-NE-S presents "California Mountain Snake [SS26]" - a fashion capsule that merges sterile, futuristic medical aesthetics with high-end fashion design. The website serves as an immersive showcase rather than an e-commerce platform, focusing on visual storytelling and brand experience.
+R&D project to practice:
 
-## Technology Stack
+- 3D integration with scroll-linked interaction
+- Clinical UI language and restrained visual identity
+- Narrative sequencing without traditional e-commerce patterns
 
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: Tailwind CSS v4
-- **Animations**: Framer Motion
-- **3D**: Spline 3D
-- **Smooth Scrolling**: Lenis
-- **Typography**: Geist font family (Geist Sans, Geist Mono, UnifrakturMaguntia, Spectral)
+Not built for checkout or transactions.
+Primary goal: presentation, interaction design, and environment building.
 
-## Design Principles
+## Stack
 
-- **Aesthetic**: Surgical minimalism with glass, metal, and lab-like lighting
-- **Color Palette**: White, glass, and neutral tones
-- **Typography**: Wide-spaced, soft text using Geist fonts
-- **Animation**: Subtle, precise, and cinematic transitions
-- **Layout**: Negative space with central object focus
+- Next.js 16 (App Router)
+- Tailwind CSS v4
+- Framer Motion
+- Spline (3D object + camera states)
+- Lenis (scroll)
+
+## Design Notes
+
+- White, neutral, lab-adjacent surfaces
+- Object at the center; UI secondary
+- Minimal typography (Geist primary, Unifraktur for accent)
+- Motion = functional, precise, non-decorative
+- Mobile treated as a separate composition, not scaled-down desktop
+
+## Key Components
+
+- SplineScene — 3D scene with camera control
+- WallNav — 4-side navigation (edge-based)
+- Section layouts — scroll-driven narrative panels
+- useActiveSection — section tracking for UI state
+
+## To Revisit
+
+- Mobile performance + reduced-motion mode
+- Asset weight + Spline optimization
+- Scroll easing and timing between sections
+- A11y audit
 
 ## Getting Started
 
@@ -67,30 +87,6 @@ app/
 └── types/
     └── camera.ts              # Camera state types
 ```
-
-## Key Features
-
-- **3D Scene Integration**: Spline 3D scene with camera state management
-- **Smooth Scrolling**: Lenis-powered smooth scrolling with section tracking
-- **Wall Navigation**: Four-wall navigation system positioned at screen edges
-- **Glass Morphism**: Frosted glass effects throughout the UI
-- **Responsive Design**: Desktop-first with simplified mobile experience
-
-## Development Guidelines
-
-- Follow the surgical minimalism aesthetic in all design choices
-- Use Tailwind classes for styling (no inline styles)
-- Keep animations subtle and cinematic (under 1.2s for UI, under 2s for scroll)
-- Maintain negative space and central object focus
-- Use Geist font family with wide spacing for typography
-- Implement glass effects with backdrop-blur for UI elements
-
-## Performance Considerations
-
-- Optimize Spline scene loading
-- Use GPU-accelerated transforms for animations
-- Implement proper cleanup in useEffect hooks
-- Minimize re-renders with proper dependency arrays
 
 ## Learn More
 
