@@ -41,7 +41,7 @@ export default function ScrollSyncedVideo() {
 
     const updateVideoTime = () => {
       // Only update if difference is significant (reduces seeking)
-      if (video.readyState >= 2 && Math.abs(video.currentTime - targetTime) > 0.1) {
+      if (video.readyState >= 2 && Math.abs(video.currentTime - targetTime) > 0.03) {
         video.currentTime = targetTime;
       }
       rafId = null;
@@ -88,6 +88,7 @@ export default function ScrollSyncedVideo() {
         className="w-full h-full object-cover"
         style={{ backgroundColor: '#ffffff' }}
       >
+        <source src="/videos/hollow-princess-video.webm" type="video/webm" />
         <source src="/videos/hollow-princess-vid.mp4" type="video/mp4" />
       </video>
     </div>
