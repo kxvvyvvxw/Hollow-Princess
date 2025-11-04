@@ -19,8 +19,8 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
   const isAnimatingRef = useRef<boolean>(false);
 
   // Error boundary handler
-  const handleError = (error: Error) => {
-    console.error("Spline error:", error);
+  const handleError = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    console.error("Spline error:", event);
     setHasError(true);
   };
 
