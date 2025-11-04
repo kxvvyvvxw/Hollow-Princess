@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import SplineScene from "./components/SplineScene";
+import ScrollSyncedVideo from "./components/ScrollSyncedVideo";
 import WallNav from "./components/WallNav";
 import Section1 from "./components/sections/Section1";
 import Section2 from "./components/sections/Section2";
@@ -10,6 +12,8 @@ import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import { useActiveSection } from "./hooks/useActiveSection";
 
 export default function Home() {
+  // Detect mobile device (synchronous, runs immediately)
+  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const { cameraState, scrollToSection } = useSmoothScroll();
   const { activeIndex } = useActiveSection();
 
@@ -18,8 +22,12 @@ export default function Home() {
       {/* Fixed 4-Wall Navigation */}
       <WallNav activeIndex={activeIndex} scrollToSection={scrollToSection} />
       
-      {/* Fixed Spline canvas - full viewport */}
-      <SplineScene cameraState={cameraState} />
+      {/* Use video on mobile, 3D on desktop */}
+      {isMobile ? (
+        <ScrollSyncedVideo />
+      ) : (
+        <SplineScene cameraState={cameraState} />
+      )}
 
       {/* Scrollable sections container */}
       <div className="relative z-10">
