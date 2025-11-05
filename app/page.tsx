@@ -1,6 +1,6 @@
 "use client";
 
-import SplineScene from "./components/SplineScene";
+import SplineSceneClient from "./components/SplineSceneClient";
 import WallNav from "./components/WallNav";
 import Section1 from "./components/sections/Section1";
 import Section2 from "./components/sections/Section2";
@@ -19,7 +19,7 @@ export default function Home() {
       <WallNav activeIndex={activeIndex} scrollToSection={scrollToSection} />
       
       {/* Fixed Spline canvas - full viewport */}
-      <SplineScene cameraState={cameraState} />
+      <SplineSceneClient cameraState={cameraState} />
 
       {/* Scrollable sections container */}
       <div className="relative z-10">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Spline from "@splinetool/react-spline";
 import { Application } from "@splinetool/runtime";
 import { CameraState } from "../types/camera";
@@ -21,23 +21,10 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
   const animationIdRef = useRef<number | null>(null);
   const isAnimatingRef = useRef<boolean>(false);
 
-  // Add state for delayed mounting on mobile/tablet
-  const [shouldMount, setShouldMount] = useState(!isMobile);
-
   // Update cameraState ref whenever it changes
   useEffect(() => {
     cameraStateRef.current = cameraState;
   }, [cameraState]);
-
-  // Delay Spline mounting on mobile/tablet to allow previous WebGL context cleanup
-  useEffect(() => {
-    if (isMobile) {
-      const timer = setTimeout(() => {
-        setShouldMount(true);
-      }, 400); // 400ms delay
-      return () => clearTimeout(timer);
-    }
-  }, [isMobile]);
 
   // Function to start the animation loop
   const startAnimationLoop = () => {
@@ -228,9 +215,7 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
 
   return (
     <div className="fixed inset-0 z-0">
-      {shouldMount && (
-        <Spline scene={sceneUrl} onLoad={onLoad} className="w-full h-full" />
-      )}
+      <Spline scene={sceneUrl} onLoad={onLoad} className="w-full h-full" />
     </div>
   );
 }
