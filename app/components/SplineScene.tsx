@@ -4,12 +4,17 @@ import { useEffect, useRef } from "react";
 import Spline from "@splinetool/react-spline";
 import { Application } from "@splinetool/runtime";
 import { CameraState } from "../types/camera";
+import useIsMobile from "../hooks/useDeviceType";
 
 interface SplineSceneProps {
   cameraState: CameraState;
 }
 
 export default function SplineScene({ cameraState }: SplineSceneProps) {
+  const isMobile = useIsMobile(768);
+  const sceneUrl = isMobile
+    ? "https://prod.spline.design/jL28RVVYWYZQ48eo/scene.splinecode"
+    : "https://prod.spline.design/iu41ezeHIYG8Uwym/scene.splinecode";
   const splineRef = useRef<Application | null>(null);
   const cameraRef = useRef<any>(null);
   const cameraStateRef = useRef<CameraState>(cameraState);
@@ -161,7 +166,7 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
   return (
     <div className="fixed inset-0 z-0">
       <Spline
-        scene="https://prod.spline.design/jL28RVVYWYZQ48eo/scene.splinecode"
+        scene={sceneUrl}
         onLoad={onLoad}
         className="w-full h-full"
       />
