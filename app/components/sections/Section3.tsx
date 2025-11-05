@@ -18,7 +18,7 @@ export default function Section3() {
         {/* Second Column */}
         <div className="flex items-center justify-center">
           <div className="font-geist-sans text-3xl md:text-4xl text-black/60 leading-tight tracking-tight text-right">
-            The other edge
+            The other
             <br />
             sharpens your <span className="font-gothic">teeth</span>
           </div>
