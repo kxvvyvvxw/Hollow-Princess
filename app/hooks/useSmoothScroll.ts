@@ -150,10 +150,6 @@ export function useSmoothScroll() {
         };
 
         setCameraState(interpolatedState);
-        // Notify listeners (e.g., FocusBlurItem) of a Lenis scroll tick for efficient updates
-        if (typeof window !== "undefined") {
-          window.dispatchEvent(new CustomEvent("lenis:scrolltick"));
-        }
       };
 
       lenis.on("scroll", handleScroll);
