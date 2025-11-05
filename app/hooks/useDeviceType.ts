@@ -40,4 +40,11 @@ export default function useIsMobile(breakpointPx?: number): boolean {
   return useDeviceType(breakpointPx);
 }
 
+/**
+ * Returns true when viewport width is <= 1024px (mobile + tablet).
+ * Useful for applying mobile/tablet-specific behavior.
+ */
+export function useIsMobileOrTablet(): boolean {
+  return useDeviceType(1024);
+}
 

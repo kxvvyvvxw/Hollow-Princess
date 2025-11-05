@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Spline from "@splinetool/react-spline";
 import { Application } from "@splinetool/runtime";
 import { CameraState } from "../types/camera";
-import useIsMobile from "../hooks/useDeviceType";
+import { useIsMobileOrTablet } from "../hooks/useDeviceType";
 
 interface SplineSceneProps {
   cameraState: CameraState;
 }
 
 export default function SplineScene({ cameraState }: SplineSceneProps) {
-  const isMobile = useIsMobile(768);
+  const isMobile = useIsMobileOrTablet();
   const sceneUrl = isMobile
     ? "https://prod.spline.design/jL28RVVYWYZQ48eo/scene.splinecode"
     : "https://prod.spline.design/iu41ezeHIYG8Uwym/scene.splinecode";
@@ -21,10 +21,23 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
   const animationIdRef = useRef<number | null>(null);
   const isAnimatingRef = useRef<boolean>(false);
 
+  // Add state for delayed mounting on mobile/tablet
+  const [shouldMount, setShouldMount] = useState(!isMobile);
+
   // Update cameraState ref whenever it changes
   useEffect(() => {
     cameraStateRef.current = cameraState;
   }, [cameraState]);
+
+  // Delay Spline mounting on mobile/tablet to allow previous WebGL context cleanup
+  useEffect(() => {
+    if (isMobile) {
+      const timer = setTimeout(() => {
+        setShouldMount(true);
+      }, 400); // 400ms delay
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile]);
 
   // Function to start the animation loop
   const startAnimationLoop = () => {
@@ -57,7 +70,7 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
       }
 
       const currentCamera = cameraRef.current;
-      
+
       // Get latest camera state from ref
       const targetState = cameraStateRef.current;
 
@@ -119,7 +132,9 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
         const scene = (spline as any).scene;
         if (scene && scene.children) {
           const foundCamera = scene.children.find(
-            (obj: any) => obj.type === "PerspectiveCamera" || obj.type === "OrthographicCamera"
+            (obj: any) =>
+              obj.type === "PerspectiveCamera" ||
+              obj.type === "OrthographicCamera"
           );
           if (foundCamera) {
             cameraRef.current = foundCamera;
@@ -130,7 +145,7 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
         }
       }
     }
-    
+
     // Try to start animation loop when camera becomes available
     if (splineRef.current && cameraRef.current && !isAnimatingRef.current) {
       startAnimationLoop();
@@ -163,13 +178,59 @@ export default function SplineScene({ cameraState }: SplineSceneProps) {
     };
   }, []);
 
+  // Enhanced cleanup on unmount - dispose Spline Application and clear all refs
+  useEffect(() => {
+    return () => {
+      // Cancel animation frame
+      if (animationIdRef.current !== null) {
+        cancelAnimationFrame(animationIdRef.current);
+        animationIdRef.current = null;
+      }
+
+      // Dispose Spline Application to release WebGL context
+      if (splineRef.current) {
+        try {
+          splineRef.current.dispose();
+          console.log("Spline Application disposed successfully");
+        } catch (e) {
+          console.warn("Error disposing Spline:", e);
+        }
+        splineRef.current = null;
+      }
+
+      // Clear camera reference
+      cameraRef.current = null;
+      isAnimatingRef.current = false;
+    };
+  }, []);
+
+  // Page visibility handler for mobile - pause animation when tab goes to background
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden && animationIdRef.current) {
+        // Page hidden - cancel animation frame to save resources
+        cancelAnimationFrame(animationIdRef.current);
+        isAnimatingRef.current = false;
+        console.log("Page hidden - animation paused");
+      } else if (!document.hidden && splineRef.current && cameraRef.current) {
+        // Page visible - restart animation loop
+        console.log("Page visible - restarting animation");
+        startAnimationLoop();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [isMobile]);
+
   return (
     <div className="fixed inset-0 z-0">
-      <Spline
-        scene={sceneUrl}
-        onLoad={onLoad}
-        className="w-full h-full"
-      />
+      {shouldMount && (
+        <Spline scene={sceneUrl} onLoad={onLoad} className="w-full h-full" />
+      )}
     </div>
   );
 }
