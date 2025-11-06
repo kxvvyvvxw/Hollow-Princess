@@ -15,7 +15,7 @@ export default function Section4() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 w-full h-full items-center px-8">
+        <div className="grid grid-cols-1 gap-4 w-full h-full items-center px-8">
           {/* First Column */}
           <div className="flex items-center justify-center">
             <div className="font-geist-sans text-4xl text-black opacity-50">
