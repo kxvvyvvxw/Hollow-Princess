@@ -1,9 +1,11 @@
 # NE-S Fashion Capsule Project - Cursor Rules
 
 ## Project Overview
+
 This is a Next.js + Tailwind CSS + Framer Motion project for the NE-S fashion capsule "California Mountain Snake [SS26]". The design combines medical aesthetics with fashion storytelling, emphasizing sterile, futuristic, and emotionally restrained visuals.
 
 ## Technology Stack
+
 - **Framework**: Next.js (App Router)
 - **Styling**: Tailwind CSS (v4)
 - **Animations**: Framer Motion
@@ -12,13 +14,15 @@ This is a Next.js + Tailwind CSS + Framer Motion project for the NE-S fashion ca
 - **Typography**: Geist font family (Geist Sans, Geist Mono, UnifrakturMaguntia, Spectral)
 
 ## Visual Design Principles
-- **Color Palette**: White, glass, and neutral tones
+
+- **Color Palette**: White and neutral tones
 - **Typography**: Geist font family with wide spacing and soft text (text-neutral-600)
 - **Layout**: Surgical minimalism with negative space and central object focus
 - **Header Style**: Frosted glass with light text
 - **Overall Tone**: Medical aesthetics meets luxury fashion
 
 ## Animation Guidelines
+
 - **Style**: Subtle, precise, and cinematic
 - **Easing**: Use "easeInOut" or "anticipate" for smooth transitions
 - **Duration**: Under 1.2s for UI fades, under 2s for scroll transitions
@@ -26,12 +30,14 @@ This is a Next.js + Tailwind CSS + Framer Motion project for the NE-S fashion ca
 - **Performance**: Keep animations GPU-friendly
 
 ## Component Architecture
+
 - **Structure**: Modular components under `/app/components`
 - **Naming**: Clear, descriptive names (e.g., `CapsuleHeader.tsx`, `ScrollIndicator.tsx`)
 - **Responsiveness**: Desktop-first with simplified mobile versions
 - **State Management**: React hooks for local state
 
 ## Code Standards
+
 - **Language**: TypeScript with strict mode enabled
 - **Styling**: Tailwind classes only (no inline styles or CSS files)
 - **Imports**: Organized and optimized
@@ -39,6 +45,7 @@ This is a Next.js + Tailwind CSS + Framer Motion project for the NE-S fashion ca
 - **Error Handling**: Proper error boundaries and fallbacks
 
 ## File Organization
+
 ```
 app/
 ├── components/
@@ -59,6 +66,7 @@ app/
 ```
 
 ## Interaction Patterns
+
 - **Tone**: Elegant, quiet, and cinematic
 - **Transitions**: Avoid playful or bouncy animations
 - **Scrolling**: Smooth with Lenis integration
@@ -66,12 +74,14 @@ app/
 - **Navigation**: Wall-based navigation with section tracking
 
 ## Brand Context
+
 - **Project Name**: NE-S / California Mountain Snake [SS26]
 - **Aesthetic**: Medical meets fashion (glass, metal, lab-like lighting)
 - **Target Audience**: High-end fashion consumers
 - **Experience Goal**: Immersive design showcase, not e-commerce
 
 ## Development Workflow
+
 1. Preserve existing animation logic and Framer Motion hooks
 2. Use Tailwind classes before inline styles
 3. Keep components self-contained and visually balanced
@@ -79,6 +89,7 @@ app/
 5. Test animations for performance and visual coherence
 
 ## Specific Implementation Rules
+
 - Use `font-geist-sans`, `font-geist-mono`, `font-gothic`, or `font-spectral` for typography
 - Apply `backdrop-blur-md` for glass effects
 - Use `text-neutral-600/85` for soft text
@@ -89,6 +100,7 @@ app/
 - Implement `transform` utilities for positioning
 
 ## Animation Implementation
+
 - Use `motion.div` for animated containers
 - Apply `initial`, `animate`, and `transition` props
 - Use `useScroll` and `useTransform` for scroll-based animations
@@ -96,6 +108,7 @@ app/
 - Use `requestAnimationFrame` for smooth 3D camera transitions
 
 ## Performance Considerations
+
 - Optimize Spline scene loading
 - Use `useRef` for expensive operations
 - Implement proper cleanup in useEffect
@@ -103,6 +116,7 @@ app/
 - Use GPU-accelerated transforms for animations
 
 ## Testing Guidelines
+
 - Test animations across different devices
 - Verify smooth scrolling performance
 - Check 3D scene loading times

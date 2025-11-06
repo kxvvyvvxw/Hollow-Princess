@@ -1,3 +1,5 @@
+import LocationButton from "../LocationButton";
+
 export default function Section2() {
   const shows = [
     { date: "2026.03.12", location: "Seoul, KR" },
@@ -25,17 +27,22 @@ export default function Section2() {
           {krShows.map((s) => (
             <div key={`${s.date}-${s.location}`}>
               <div className="grid grid-cols-1 md:grid-cols-2 items-baseline">
-                <div className="justify-self-start text-left font-geist-sans text-neutral-600/85 tracking-widest uppercase text-sm md:text-base">
-                  {s.date}
+                <div className="justify-self-start">
+                  <LocationButton label={s.date} compact align="left" />
                 </div>
-                <div className="justify-self-end text-right font-geist-sans text-neutral-800 text-3xl md:text-6xl leading-tight">
-                  {s.location}
-                  <div className="text-[10px] md:text-xs text-neutral-500/70 mt-1">
-                    {s.location === "Seoul, KR" &&
-                      "Sinsa Boutique — Garosu-gil"}
-                    {s.location === "Busan, KR" && "Haeundae Market Studio"}
-                    {s.location === "Daegu, KR" && "Dongseongno Select Shop"}
-                  </div>
+                <div className="justify-self-end text-right">
+                  <LocationButton
+                    label={s.location}
+                    subLabel={
+                      s.location === "Seoul, KR"
+                        ? "Sinsa Boutique — Garosu-gil"
+                        : s.location === "Busan, KR"
+                        ? "Haeundae Market Studio"
+                        : s.location === "Daegu, KR"
+                        ? "Dongseongno Select Shop"
+                        : undefined
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -46,15 +53,20 @@ export default function Section2() {
           {jpShows.map((s) => (
             <div key={`${s.date}-${s.location}`}>
               <div className="grid grid-cols-1 md:grid-cols-2 items-baseline">
-                <div className="justify-self-start text-left font-geist-sans text-neutral-600/85 tracking-widest uppercase text-sm md:text-base">
-                  {s.date}
+                <div className="justify-self-start">
+                  <LocationButton label={s.date} compact align="left" />
                 </div>
-                <div className="justify-self-end text-right font-geist-sans text-neutral-800 text-3xl md:text-6xl leading-tight">
-                  {s.location}
-                  <div className="text-[10px] md:text-xs text-neutral-500/70 mt-1">
-                    {s.location === "Tokyo, JP" && "Shibuya Ward Showroom"}
-                    {s.location === "Osaka, JP" && "Umeda Pop-Up Gallery"}
-                  </div>
+                <div className="justify-self-end text-right">
+                  <LocationButton
+                    label={s.location}
+                    subLabel={
+                      s.location === "Tokyo, JP"
+                        ? "Shibuya Ward Showroom"
+                        : s.location === "Osaka, JP"
+                        ? "Umeda Pop-Up Gallery"
+                        : undefined
+                    }
+                  />
                 </div>
               </div>
             </div>
