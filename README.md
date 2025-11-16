@@ -1,8 +1,6 @@
 🗡️ Hollow Princess — Scroll-Driven UI Concept
 
-[![Status](https://img.shields.io/badge/Status-Concept-purple?style=for-the-badge&logo=semanticweb)]()
-[![Type](https://img.shields.io/badge/Type-UI%2FUX_Prototype-black?style=for-the-badge&logo=vercel)]()
-[![Built_with](https://img.shields.io/badge/Built_with-Next.js-000000?style=for-the-badge&logo=nextdotjs)]()
+[![Status: Concept](https://img.shields.io/badge/status-concept-blueviolet.svg)](https://github.com/daw99y/paranoid) [![Type: UI%2FUX%20Prototype](https://img.shields.io/badge/type-UI%2FUX%20prototype-333333.svg)](https://github.com/daw99y/paranoid)
 
 ![Hollow Princess preview](./public/images/hollow-princess-readme.png)
 
