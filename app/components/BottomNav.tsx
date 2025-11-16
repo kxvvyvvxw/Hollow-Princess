@@ -20,7 +20,7 @@ export default function BottomNav({ activeIndex, onNavigate }: BottomNavProps) {
               onClick={() => onNavigate(index)}
               className={[
                 "font-gothic text-lg tracking-widest  transition-all duration-300",
-                "text-black/70 hover:text-black/85",
+                "text-black/65 hover:text-black/85",
                 "transform hover:scale-105 focus:scale-105 focus:outline-none",
                 isActive ? "text-black/100" : "",
               ]
