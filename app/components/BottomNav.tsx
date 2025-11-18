@@ -19,10 +19,12 @@ export default function BottomNav({ activeIndex, onNavigate }: BottomNavProps) {
               type="button"
               onClick={() => onNavigate(index)}
               className={[
-                "font-gothic text-lg tracking-widest  transition-all duration-300",
+                "font-gothic text-lg tracking-widest transition-all duration-300",
                 "text-black/65 hover:text-black/85",
-                "transform hover:scale-105 focus:scale-105 focus:outline-none",
-                isActive ? "text-black/100" : "",
+                "transform focus:outline-none",
+                isActive
+                  ? "text-black/100 scale-110"
+                  : "scale-100 hover:scale-105 focus:scale-105",
               ]
                 .filter(Boolean)
                 .join(" ")}

@@ -3,13 +3,41 @@
 import { useState, useEffect, useRef } from "react";
 
 export function useActiveSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const isAtTop = () => typeof window !== "undefined" && window.scrollY <= 10;
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const handleTopReset = () => {
+      if (isAtTop()) {
+        setActiveIndex(-1);
+      }
+    };
+
+    window.addEventListener("scroll", handleTopReset, { passive: true });
+    handleTopReset();
+
+    return () => {
+      window.removeEventListener("scroll", handleTopReset);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     // Create IntersectionObserver to track which section is in view
     observerRef.current = new IntersectionObserver(
       (entries) => {
+        if (isAtTop()) {
+          return;
+        }
+
         entries.forEach((entry) => {
           if (!entry.isIntersecting) {
             return;
